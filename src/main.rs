@@ -15,7 +15,8 @@ mod prelude {
     pub const SCREEN_HEIGHT: i32 = 50;
     pub const DISPLAY_WIDTH: i32 = SCREEN_WIDTH / 2;
     pub const DISPLAY_HEIGHT: i32 = SCREEN_HEIGHT / 2;
-    pub const FONT: &str = "dungeonfont.png";
+    pub const DUNGEON_FONT: &str = "dungeonfont.png";
+    pub const TERMINAL_FONT: &str = "terminal8x8.png";
     pub use crate::map::*;
     pub use crate::map_builder::*;
     pub use crate::camera::*;
@@ -68,6 +69,8 @@ impl GameState for State {
         ctx.cls();
         ctx.set_active_console(1);
         ctx.cls();
+        ctx.set_active_console(2);
+        ctx.cls();
         self.resources.insert(ctx.key);
         let current_state = self.resources.get::<TurnState>().unwrap().clone();
         match current_state {
@@ -86,9 +89,11 @@ fn main() -> BError {
         .with_dimensions(DISPLAY_WIDTH, DISPLAY_HEIGHT)
         .with_tile_dimensions(32, 32)
         .with_resource_path("resources/")
-        .with_font(FONT, 32, 32)
-        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, FONT)
-        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, FONT)
+        .with_font(DUNGEON_FONT, 32, 32)
+        .with_font(TERMINAL_FONT, 8, 8)
+        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, DUNGEON_FONT)
+        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, DUNGEON_FONT)
+        .with_simple_console_no_bg(SCREEN_WIDTH*2, SCREEN_HEIGHT*2, TERMINAL_FONT)
         .build()?;
 
     main_loop(context, State::new())
