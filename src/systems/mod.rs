@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-mod player_input;
 mod map_render;
 mod entity_render;
+mod player_input;
 mod collisions;
 mod random_move;
 mod end_turn;

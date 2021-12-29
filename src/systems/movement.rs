@@ -20,6 +20,5 @@ pub fn movement(
             camera.on_player_move(want_move.destination);
         }
     }
-
     commands.remove(*entity);
 }
